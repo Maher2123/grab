@@ -6,7 +6,7 @@ const IPINFO_TOKEN = '12ecd6b82b80a8';  // Registriere dich bei ipinfo.io und er
 
 app.get('/', async (req, res) => {
     const user_ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
+    const firstIp = user_ip.split(',')[0].trim();
     // User-Agent des Besuchers erfassen
     const user_agent = req.headers['user-agent'];
 
