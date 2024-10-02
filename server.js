@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
+const path =require("path")
 
 const IPINFO_TOKEN = '12ecd6b82b80a8';  // Registriere dich bei ipinfo.io und erhalte ein kostenloses Token
 
@@ -13,6 +14,14 @@ app.get('/', async (req, res) => {
    // const firstIp = user_ip.split(',')[0].trim();
     const user_agent = req.headers['user-agent'];
 
+    app.get('/download', (req, res) => {
+        const filePath = path.join(__dirname, 'traffic_log.txt');  // Pfad zur Datei
+        res.download(filePath, 'traffic_log.txt', (err) => {
+            if (err) {
+                console.error('Fehler beim Senden der Datei:', err);
+            }
+        });
+    });
     // Geolocation-Daten von IPinfo abrufen
     try {
         const response = await axios.get(`https://ipinfo.io/${firstIp}?token=${IPINFO_TOKEN}`);
