@@ -6,16 +6,19 @@ const IPINFO_TOKEN = '12ecd6b82b80a8';  // Registriere dich bei ipinfo.io und er
 
 app.get('/', async (req, res) => {
     const user_ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    const firstIp = user_ip.split(',')[0].trim();
+
+    const firstIp = user_ip.toString().split(',')[0].trim();
     // User-Agent des Besuchers erfassen
+    //const user_ip = '34.83.194.43, 162.158.87.38, 10.217.163.241';
+   // const firstIp = user_ip.split(',')[0].trim();
     const user_agent = req.headers['user-agent'];
 
     // Geolocation-Daten von IPinfo abrufen
     try {
-        const response = await axios.get(`https://ipinfo.io/${user_ip}?token=${IPINFO_TOKEN}`);
+        const response = await axios.get(`https://ipinfo.io/${firstIp}?token=${IPINFO_TOKEN}`);
         const locationData = response.data;
 
-        console.log(`IP-Adresse: ${user_ip}`);
+        console.log(`IP-Adresse: ${firstIp}`);
         console.log(`Standort: ${locationData.city}, ${locationData.region}, ${locationData.country},${locationData.city},${locationData.org}`);
         console.log(`User-Agent: ${user_agent}`);
 
